@@ -1,0 +1,17 @@
+How to install the binary :
+---------------------------
+If you are using 32-bit machine - run
+sudo cp bin/32-bit/* /usr/bin
+If you are using 64-bit machine - run
+sudo cp bin/64-bit/* /usr/bin
+then execute with the command:
+words
+
+How to install binary from source:
+---------------------------------
+Under GNU/Linux, compile it:
+g++ words.cpp -o copy/words 
+and copy the files:
+sudo cp copy/* /usr/bin
+then execute with the command:
+words
