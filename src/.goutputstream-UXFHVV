@@ -1,31 +1,7 @@
-/*	Filename: words.cpp
- *	Devs: Micah Butler (princessjinifer)
- *		  Lakshmipathi.G (Laks)
- *	Created: Sometime 2010
- * 	Edited: 5/9/2010
- *	It has no functionality, it does nothing useful, just has a few things mostly related to the game...
- *	v.0.2
-*/
+// first c++ program
+//	Micah Butler 2010
 
 #include "words.h"
-
-string name; // for the name exchange
-string where_to; // getting around the program
-string confirm_quit; // confirmation of quitting the program
-string gcheck; // for checking the guess
-int guess; // guessing the number in the game
-int score; // how many guesses that you have made
-int incorrect_guess; // how many times they guess something other than something in between 1 and highn
-string word; // the password on the settings
-string change; // in the settings, when it asks you what you want to do
-string newword; // when choosing a new password in the settings
-string secretw; // the password when entering the settings
-string names; // extracts the names file to this
-string hnum; // extraction of the number file
-int highn; // used to generate the random number
-int rando; // the random number
-string playagain; // when you are asked if you want to play again
-string highscore; // for displaying the highscores of the game
 
 void quit (); // the part where the program kinda quits... idk... :D
 void help (); // shows the help section
@@ -37,8 +13,6 @@ void credits (); // used for showing the credits
 void extract (); // used for getting the number from the file
 void random_range (); // getting the random number
 void you_win (); // after you win the game, it takes you here
-void highscores (); // the highscores for the game
-void circle (); // the circle calculations :D
 
 // extract is a cool name for it, but not a good one, this one needs changing too :/
 void extract () // extracts the high number from the file
@@ -52,15 +26,18 @@ void extract () // extracts the high number from the file
 		}
 		highnum.close(); // closes teh file
 	}
+//	stringstream highn(hnum);
 	stringstream highn_str(hnum);
 	highn_str >> highn;
+//	highn = atoi(hnum); // change it to an integer
 	random_range ();
 }
 
 void random_range ()
 {
+//	int lowest_no = 1;
 	srand(static_cast<unsigned int>(time(0)));
-	// Thanks to Laks for fixing this part in my program, it really helps :)
+	// Thanks to Laks for fixing this in my program, it really helps :)
 	rando = rand() % highn +1;
 	game ();
 }
@@ -69,13 +46,10 @@ int main ()
 {
 	cout << "Please enter your name: "; // prints 'Please enter your name'
 	getline (cin, name); // gets users name
-	ofstream put_name ("names", ios::app); // opens the 'names' file for writing the name to it
-	if (put_name.is_open())
-	{
-		put_name << name << endl; // writes the name to it
-		put_name.close(); // closes it
-	}
-	cout << "Well hello there " << name << "!" << endl; // prints Hello 'name'!
+	ofstream a_file ( "names", ios::app ); // opens the 'names' file for writing the name to it
+	a_file<<name<<endl; // writes the name to it
+	a_file.close(); // closes it
+	cout << "Hello " << name << "!" << endl; // prints Hello 'name'!
 	cout << "Welcome to words, the name is lame, so think up a new one for me pwease? :3" << endl; // That is a good idea XD
 	quit ();
 }
@@ -83,75 +57,39 @@ int main ()
 // I have no clue why I called this one quit, I need to change that in a future version, remind me?
 void quit ()
 {
-	system("clear");
 	// I need a better way to word this too, this will suffice for the time being, but I want my users to be less confused...
-	accident:
-	cout << "If you don't know what to do here, just type 'help' :D" << endl; // Lets start 'splainin
-	cout << "Type something in, anything not mentioned in 'help' will end the program: "; // well?
-	getline (cin, where_to); // type something
-	if (where_to == "help" || where_to == "Help" || where_to == "HELP") // so you want to see the help?
+	cout << "Here is where you choose what to do;" << endl; // Lets start 'splainin
+	cout << "Type in 'help' for help or a word to end program: "; // well?
+	getline (cin, name); // type something
+	if (name == "help") // so you want to see the help?
 	{
 		help (); // takes you to the help section (so it can help you!) :D
 	}
-	if (where_to == "settings" || where_to == "Settings" || where_to == "SETTINGS") // Oh, so making a few adjustments?
+	if (name == "settings") // Oh, so making a few adjustments?
 	{
 		settings (); // takes you to the settings section (so you can make this YOUR program XD)
 	}
-	if (where_to == "list" || where_to == "List" || where_to == "LIST") // Being nosey on who has used this XP
+	if (name == "list") // Being nosey on who has used this XP
 	{
 		list (); // takes you to the list section (so you can see who all has used it)
 	}
-	if (where_to == "play" || where_to == "Play" || where_to == "PLAY") // lets play a game XD
+	if (name == "play") // lets play a game XD
 	{
-		extract (); // Oooh, that function sounds fun, take me there XD
+		extract (); // Oooh, a game sounds fun, take me there XD
 	}
-	if (where_to == "credits" || where_to == "Credits" || where_to == "CREDITS") // Now here is where it gives credit to everyone who has made it :)
+	if (name == "credits") // Now here is where it gives credit to everyone who has made it :)
 	{
-		credits ();
-	}
-	if (where_to == "highscores" || where_to == "Highscores" || where_to == "HIGHSCORES") // The highscores :3
-	{
-		highscores ();
-	}
-	if (where_to == "circle" || where_to == "Circle" || where_to == "CIRCLE")
-	{
-		circle ();
+		credits (); // :D
 	}
 	else // anything else entered
 	{
-		retry:
-		cout << "Are you sure you want to quit? [yes(y)/no(n)] ";
-		getline (cin, confirm_quit);
-		if (confirm_quit == "yes" || confirm_quit == "Yes" || confirm_quit == "y" || confirm_quit == "Y")
-		{
-			exit (1); // kills the program >:D
-		}
-		if (confirm_quit == "no" || confirm_quit == "No" || confirm_quit == "n" || confirm_quit == "N")
-		{
-			system("clear");
-			goto accident;
-		}
-		else
-		{
-			cout << "I do not recognize that, enter one of the given choices..." << endl;
-			goto retry;
-		}
+		exit (1); // kills the program >:D
 	}
 }
 
 void help () // Here is the help
 {
-	cout << "Commands:\n";
-	cout << "help: shows the help\n";
-	cout << "settings: shows the settings of the program\n";
-	cout << "list: shows a list of all the people who have used this\n";
-	cout << "play: lets you play a number guessing game\n";
-	cout << "credits: displays the credits!\n\n";
-	cout << "circle: a circle calculator";
-	// ^ thats alot, and I am still adding as I go o:
-	cout << "Press ENTER to get back to the menu";
-	cin.get();
-	system("clear");
+	cout << "Commands:" << endl << "help: shows the help" << endl << "settings: shows the settings of the program" << endl << "list: shows a list of all the people who have used this" << endl << "play: lets you play a number guessing game" << endl << "credits: displays the credits!" << endl; // thats alot, and still adding :O
 	quit (); // takes you back to the ending thingie
 }
 
@@ -236,7 +174,7 @@ void list () // lets show who all has used it...
 	ifstream users ("names"); // open the file
 	if (users.is_open()) // if its open then:
 	{
-		while ( users.good() ) // idk exactly
+		if ( users.good() ) // idk exactly
 		{
 			getline (users,names); // get the file contents
 			cout << names << endl; // and display them all here
@@ -244,39 +182,17 @@ void list () // lets show who all has used it...
 		users.close(); // close teh file
 	}
 	else cout << "Unable to open file"; // sorry, cannot open that one either :(
-	cout << "press ENTER to get back to the menu";
-	cin.get();
-	system("clear");
 	quit (); // back to the main thingy
 }
 
 void credits () // here are the cool people
 {
 	system("clear"); // clear the screen
-	cout << "Princessjinifer: Owner and main programmer http://goo.gl/i6qvk" << endl << "Lakshmipathi.G: Main tester and secondary programmer http://www.giis.co.in/" << endl; // yup yup!
+	cout << "Princessjinifer: Owner and main programmer http://goo.gl/i6qvk" << endl << "Lakshmipathi.G: tester and secondary programmer http://www.giis.co.in/" << endl; // yup yup!
 	quit (); // the main thingy again
 }
 
-void highscores () // here you get to see how well you have been doing :)
-{
-	ifstream show_scores ("highscores"); // open the file
-	if (show_scores.is_open()) // if its open then:
-	{
-		while ( show_scores.good() ) // idk exactly
-		{
-			getline (show_scores,highscore); // get the file contents
-			cout << highscore << endl; // and display them all here
-		}
-		show_scores.close(); // close teh file
-	}
-	else cout << "Unable to open file"; // sorry, cannot open that one either :(
-	cout << "press ENTER to get back to the menu";
-	cin.get();
-	system("clear");
-	quit (); // back to the main thingy
-}
-
-void game () // now for the fun stuff!!
+void game () // now for the REAL fun stuff!!
 {
 	system("clear"); // clear the screen
 	cout << "I have chosen a number between 1 and " << hnum << ", you are going to take a guess and I will tell you if you are too high or too low..." << endl; // some 'splainin
@@ -334,12 +250,6 @@ void you_win () // this is the procedure after the person has won the game :3
 	cout << "You guessed correctly!" << endl; // yay! you won!
 	cout << "You guessed " << score << " times before winning o: I know you can do better than that!!" << endl;
 	cout << "You guessed " << incorrect_guess << " words/blank guesses/numbers higher than " << highn << ", You should be a little more careful :P" << endl;
-	ofstream put_score ("highscores", ios::app); // opens the 'names' file for writing the name to it
-	if (put_score.is_open())
-	{
-		put_score << name << "\t\t" << score << "\t\t" << incorrect_guess << endl; // writes the name to it
-		put_score.close(); // closes it
-	}
 	play_again:
 	cout << "Play again? (y,n): "; // do you want to play again?
 	getline (cin, playagain); // yes or no?
@@ -349,7 +259,6 @@ void you_win () // this is the procedure after the person has won the game :3
 	}
 	if (playagain=="n") // ok, play again soon! :)
 	{
-		system("clear");
 		quit (); // goes to the thingie :P
 	}
 	else // yeppity yep
