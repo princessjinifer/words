@@ -1,0 +1,29 @@
+WORDS TO-DO List
+============
+
+Here is our TO-DO list:
+
+I need someone with a Mac to do some testing for me, get this working on a Mac because I don't have a Mac to do testing on...
+
+Contact jgordon24@zcat.com if you have any suggestions or bug reports
+
+	*********************************************************
+	***Bug Fixes and TODO before next release (priority 1)***
+	*********************************************************
+
+-       Fix the error when 'Ctrl+D' is pressed while playing the game
+
+	************************************************
+	***Existing Feature Improvements (priority 2)***
+	************************************************
+
+
+
+	*********************************
+	***Extra Features (priority 3)***
+	*********************************
+
+-	Add high scores list for the game
+X	Add the credits
+X	Add changing the high number for the game in the settings
+X	Added ability to change the high number in the settings
