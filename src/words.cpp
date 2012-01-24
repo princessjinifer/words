@@ -2,20 +2,21 @@
  *	Devs: Micah Butler (princessjinifer)
  *		  Lakshmipathi.G (Laks)
  *	Created: Sometime 2010
- * 	Edited: 5/9/2010
+ * 	Edited: 1/24/2012
  *	It has no functionality, it does nothing useful, just has a few things mostly related to the game...
- *	v.0.2
+ *	v.0.2.0.1
 */
 
 #include "words.h"
+
+#define returnToMenu "press ENTER to get back to the menu"
 
 string name; // for the name exchange
 string where_to; // getting around the program
 string confirm_quit; // confirmation of quitting the program
 string gcheck; // for checking the guess
 int guess; // guessing the number in the game
-int score; // how many guesses that you have made
-int incorrect_guess; // how many times they guess something other than something in between 1 and highn
+//int incorrect_guess; // how many times they guess something other than something in between 1 and highn
 string word; // the password on the settings
 string change; // in the settings, when it asks you what you want to do
 string newword; // when choosing a new password in the settings
@@ -36,7 +37,7 @@ void list (); // for showing the names of names
 void credits (); // used for showing the credits
 void extract (); // used for getting the number from the file
 void random_range (); // getting the random number
-void you_win (); // after you win the game, it takes you here
+void you_win (int final_score, int incorrectGuess); // after you win the game, it takes you here
 void highscores (); // the highscores for the game
 void circle (); // the circle calculations :D
 
@@ -59,7 +60,6 @@ void extract () // extracts the high number from the file
 
 void random_range ()
 {
-	srand(static_cast<unsigned int>(time(0)));
 	// Thanks to Laks for fixing this part in my program, it really helps :)
 	rando = rand() % highn +1;
 	game ();
@@ -75,18 +75,18 @@ int main ()
 		put_name << name << endl; // writes the name to it
 		put_name.close(); // closes it
 	}
+	system("clear");
 	cout << "Well hello there " << name << "!" << endl; // prints Hello 'name'!
-	cout << "Welcome to words, the name is lame, so think up a new one for me pwease? :3" << endl; // That is a good idea XD
+	cout << "Welcome to words, the name is lame, so think up a new one for me pwease? :3\n"; // That is a good idea XD
 	quit ();
 }
 
 // I have no clue why I called this one quit, I need to change that in a future version, remind me?
 void quit ()
 {
-	system("clear");
 	// I need a better way to word this too, this will suffice for the time being, but I want my users to be less confused...
 	accident:
-	cout << "If you don't know what to do here, just type 'help' :D" << endl; // Lets start 'splainin
+	cout << "If you don't know what to do here, just type 'help' :D\n"; // Lets start 'splainin
 	cout << "Type something in, anything not mentioned in 'help' will end the program: "; // well?
 	getline (cin, where_to); // type something
 	if (where_to == "help" || where_to == "Help" || where_to == "HELP") // so you want to see the help?
@@ -133,7 +133,7 @@ void quit ()
 		}
 		else
 		{
-			cout << "I do not recognize that, enter one of the given choices..." << endl;
+			cout << "I do not recognize that, enter one of the given choices...\n";
 			goto retry;
 		}
 	}
@@ -146,10 +146,10 @@ void help () // Here is the help
 	cout << "settings: shows the settings of the program\n";
 	cout << "list: shows a list of all the people who have used this\n";
 	cout << "play: lets you play a number guessing game\n";
-	cout << "credits: displays the credits!\n\n";
-	cout << "circle: a circle calculator";
+	cout << "credits: displays the credits!\n";
+	cout << "circle: a circle calculator\n\n";
 	// ^ thats alot, and I am still adding as I go o:
-	cout << "Press ENTER to get back to the menu";
+	cout << returnToMenu;
 	cin.get();
 	system("clear");
 	quit (); // takes you back to the ending thingie
@@ -172,22 +172,31 @@ void settings () // the settings :D
 	}
 	else
 	{
-		cout << "Sorry there was a problem" << endl; // tell them there was a problem
+		cout << "Sorry there was a problem\n"; // tell them there was a problem
 		quit (); // head back to the body
 	}
 	if (word == secretw) // if what you entered up there ^ equals what we have here <
 	{
-		cout << "Access Granted" << endl; // you got it!!
+		cout << "Access Granted\n"; // you got it!!
 		goto settings; // go to the fun stuff!! XD
 	}
 	else // otherwise, if your wrong
 	{
-		cout << "Access Denied" << endl; // BAHAHA, you failed!! >:D
+		cout << "Access Denied\n"; // BAHAHA, you failed!! >:D
 		goto tryagain; // go back to the beginning and try again
 	}
 	settings: // here is where we actually do some editing
-	cout << "Please enter a number" << endl << "1. Return to the program" << endl << "2. Change the settings password" << endl << "3. Change the high number for the guessing game" << endl << ": "; // explains what all you can do
+	cout << "Please enter a number\n";
+	cout << "1. Return to the program\n";
+	cout << "2. Change the settings password\n";
+	cout << "3. Change the high number for the guessing game\n";
+	cout << ": "; // explains what all you can do
 	getline (cin, change); // get what they want
+	if (change == "1") // if you chose the first one
+	{
+		system("clear"); // clear the screen
+		quit (); // and get back to the, umm, other thing :P
+	}
 	if (change == "2") // if you want the 2nd one
 	{
 		ofstream word ("word", ios::trunc); // open our password file
@@ -202,11 +211,6 @@ void settings () // the settings :D
 			goto settings; // back to the fun stuff :)
 		}
 		else cout << "Unable to open file"; // cant open the file :(
-	}
-	if (change == "1") // if you chose the first one
-	{
-		system("clear"); // clear the screen
-		quit (); // and get back to the, umm, other thing :P
 	}
 	if (change == "3") // if you want the 3rd one
 	{
@@ -244,7 +248,7 @@ void list () // lets show who all has used it...
 		users.close(); // close teh file
 	}
 	else cout << "Unable to open file"; // sorry, cannot open that one either :(
-	cout << "press ENTER to get back to the menu";
+	cout << returnToMenu;
 	cin.get();
 	system("clear");
 	quit (); // back to the main thingy
@@ -253,8 +257,12 @@ void list () // lets show who all has used it...
 void credits () // here are the cool people
 {
 	system("clear"); // clear the screen
-	cout << "Princessjinifer: Owner and main programmer http://goo.gl/i6qvk" << endl << "Lakshmipathi.G: Main tester and secondary programmer http://www.giis.co.in/" << endl; // yup yup!
-	quit (); // the main thingy again
+	cout << "Princessjinifer: Owner and main programmer http://goo.gl/i6qvk\n";
+	cout << "Lakshmipathi.G: Main tester and secondary programmer http://www.giis.co.in/\n\n"; // yup yup!
+	cout << returnToMenu;
+	cin.get();
+	system("clear");
+	quit ();
 }
 
 void highscores () // here you get to see how well you have been doing :)
@@ -270,7 +278,7 @@ void highscores () // here you get to see how well you have been doing :)
 		show_scores.close(); // close teh file
 	}
 	else cout << "Unable to open file"; // sorry, cannot open that one either :(
-	cout << "press ENTER to get back to the menu";
+	cout << returnToMenu;
 	cin.get();
 	system("clear");
 	quit (); // back to the main thingy
@@ -279,65 +287,63 @@ void highscores () // here you get to see how well you have been doing :)
 void game () // now for the fun stuff!!
 {
 	system("clear"); // clear the screen
-	cout << "I have chosen a number between 1 and " << hnum << ", you are going to take a guess and I will tell you if you are too high or too low..." << endl; // some 'splainin
+	cout << "I have chosen a number between 1 and " << hnum << ", you are going to take a guess and I will tell you if you are too high or too low...\n"; // some 'splainin
 	play (); // now it starts...
 }
 
 void play () // the part where you actually play
 {
+	int score=0;
+	int incorrect_guess=0;
 //	cout << rando << endl; // used for developer purposes only
-	score=0;
-	incorrect_guess=0;
-//	cout << score;
 	game: // starts teh game, FINALLY!!!
 //	cout << score << endl; // used for developer purposes only
 //	cout << incorrect_guess << endl; // used for developer purposes only
 	while (true) // this is a while loop, 
 	{
-	cout << "Guess a number: "; // prints Guess a number
-	getline (cin, gcheck); // the player guesses
-	stringstream guessc(gcheck); // and it converts it to something else
-/*	if (guess=="^d") // still working on this
-	{
-		exit (1); // Kills it >:D
-	}*/
-	if (guessc >> guess) // idk where guess came from, cause I don't see where they input to it...
-		break; // belongs with the 'while (true)' statement up there
-		cout << "Sorry, you have to guess a number" << endl; // Sorry, that's not a number
-		incorrect_guess++;
+		cout << "Guess a number: "; // prints Guess a number
+		getline (cin, gcheck); // the player guesses
+		stringstream guessc(gcheck); // and it converts it to something else
+		if (guessc >> guess) // idk where guess came from, cause I don't see where they input to it...
+			break; // belongs with the 'while (true)' statement up there
+			cout << "Sorry, you have to guess a number\n"; // Sorry, that's not a number
+			incorrect_guess++;
 	}
 	if (guess>highn) // is it bigger than 100?
 	{
-		incorrect_guess++;
 		cout << "Sorry, you have to guess a number between 1 and " << highn << endl; // then sorry, it has to be lower
 		goto game; // go back to the start of the game
+		incorrect_guess++;
 	}
 	score++; // increases their guess count by 1
 	if (guess==rando) // are you correct?
 	{
-		you_win ();
+		you_win (score, incorrect_guess);
 	}
 	if (guess<rando) // is it smaller than the chosen number?
 	{
-		cout << "Your guess is too low, guess higher!" << endl; // guess higher!
+		cout << "Your guess is too low, guess higher!\n"; // guess higher!
 	 	goto game; // goes to teh beginning
 	}
 	if (guess>rando) // is it bigger than the chosen number?
 	{
-		cout << "Your guess is too high, guess lower!" << endl; // nope, guess lower
+		cout << "Your guess is too high, guess lower!\n"; // nope, guess lower
 	 	goto game; // goes back to the beginning
 	}
 }
 
-void you_win () // this is the procedure after the person has won the game :3
+void you_win (int final_score, int incorrectGuess) // this is the procedure after the person has won the game :3
 {
-	cout << "You guessed correctly!" << endl; // yay! you won!
-	cout << "You guessed " << score << " times before winning o: I know you can do better than that!!" << endl;
-	cout << "You guessed " << incorrect_guess << " words/blank guesses/numbers higher than " << highn << ", You should be a little more careful :P" << endl;
+	cout << "You guessed correctly!\n"; // yay! you won!
+	cout << "You guessed " << final_score << " times before winning o: I know you can do better than that!!\n";
+	if (incorrectGuess > 0)
+	{
+		cout << "You guessed " << incorrectGuess << " words/blank guesses/numbers higher than " << highn << ", You should be a little more careful :P\n";
+	}
 	ofstream put_score ("highscores", ios::app); // opens the 'names' file for writing the name to it
 	if (put_score.is_open())
 	{
-		put_score << name << "\t\t" << score << "\t\t" << incorrect_guess << endl; // writes the name to it
+		put_score << name << "\t\t" << final_score << "\t\t" << incorrectGuess << endl; // writes the name to it
 		put_score.close(); // closes it
 	}
 	play_again:
@@ -354,7 +360,7 @@ void you_win () // this is the procedure after the person has won the game :3
 	}
 	else // yeppity yep
 	{
-		cout << "Sorry, you have to use either 'y' or 'n'..." << endl;
+		cout << "Sorry, you have to use either 'y' or 'n'...\n";
 		goto play_again;
 	}
 }

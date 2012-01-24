@@ -30,8 +30,7 @@ extern string confirm_quit; // confirmation of quitting the program
 
 extern string gcheck; // for checking the guess
 extern int guess; // guessing the number in the game
-extern int score; // how many guesses that you have made
-extern int incorrect_guess; // how many times they guess something other than something in between 1 and highn
+//extern int incorrect_guess; // how many times they guess something other than something in between 1 and highn
 
 // void settings
 

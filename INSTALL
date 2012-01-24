@@ -1,11 +1,13 @@
 How to install the binary :
 ---------------------------
 installing the binary doens't work at the moment
-wait for the next release to fix that :)
+wait for a future release to fix that :)
 
 execute with the commands:
-cd words-0.2/bin/32-bit // changing the directory is improtant, ./words-0.2/bin/32-bit/words will break some of the features.
+cd words-0.2/bin/
 ./words
+
+NOTE: changing the directory is important, ./words-0.2/bin/32-bit/words will break some of the features.
 
 How to install binary from source:
 ---------------------------------
@@ -13,8 +15,9 @@ Under GNU/Linux, compile it:
 make
 
 copying the files doesn't work right now
-wait for the next release to be able to do that...
+wait for a future release to be able to do that...
 
 execute it with:
-cd src/copy // make sure you are in the directory with the Makefile before doing this
+cd src/copy 
+NOTE: make sure you are in the directory with the Makefile before doing this
 ./words
