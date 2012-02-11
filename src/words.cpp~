@@ -33,7 +33,7 @@ void list ();
 void credits ();
 void you_win (int final_score, int incorrectGuess);
 void highscores ();
-void circleCalc ();
+void circle ();
 
 int random_chooser ()
 {
@@ -129,7 +129,7 @@ void body (string where_from)
 	}
 	if (where_to == "circle" || where_to == "Circle" || where_to == "CIRCLE")
 	{
-		circleCalc ();
+		circle ();
 	}
 	else
 	{
@@ -292,13 +292,13 @@ void highscores ()
 	body (returned_from);
 }
 
-void play ()
+void play () // the part where you actually play
 {
 	int rando;
 	rando = random_chooser ();
 
 	system("clear");
-	cout << "I have chosen a number between 1 and " << highn << ", you are going to take a guess and I will tell you if you are too high or too low...\n";
+	cout << "I have chosen a number between 1 and " << highn << ", you are going to take a guess and I will tell you if you are too high or too low...\n"; // some 'splainin
 	int score=0;
 	int incorrect_guess=0;
 //	cout << rando << endl; // used for developer purposes only

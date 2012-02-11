@@ -18,57 +18,13 @@ float measurement_length_radius;
 float measurement_length_area;
 float measurement_length_area_radius;
 
-void circleCalc ();
-void sphere ();
-void cylindar ();
-void circleArea (); // calculating the diameter, circumference and radius
-void circleRadius (); // calculating the diameter, circumference and area
-void circleDiameter (); // calculating the circumference, radius and area
-void circleCircumference (); // calculating the diameter, radius and area
+void area (); // calculating the diameter, circumference and radius
+void radius (); // calculating the diameter, circumference and area
+void diameter (); // calculating the circumference, radius and area
+void circumference (); // calculating the diameter, radius and area
 void afterwards (); // after the calculations
 void circle (); // when it enters from words :)
-void body (string where_from); // the part where the program kinda quits... idk... :D
-
-class cylindarCalculations {
-	float cylindarCircleMeasurementClass;
-	float cylindarLengthClass;
-
-public:
-	void set_values (float, float);
-	float calculations ()
-	{
-		float returnedCalc = (cylindarCircleMeasurementClass*cylindarCircleMeasurementClass*PI)*cylindarLengthClass;
-		return (returnedCalc);
-	}
-};
-
-void circleCalc ()
-{
-	string kindOfProblem;
-
-	system("clear");
-	while (true)
-	{
-		cout << "Enter \"circle\", \"cylindar\" or \"sphere\"\n";
-		cout << "What are we trying to calculate here? ";
-		getline(cin,kindOfProblem);
-		if (kindOfProblem == "circle")
-		{
-			circle();
-			break;
-		}
-		if (kindOfProblem == "cylindar")
-		{
-			cylindar ();
-			break;
-		}
-		if (kindOfProblem == "sphere")
-		{
-			sphere ();
-			break;
-		}
-	}; //while (kindOfProblem != "circle" || kindOfProblem != "cylindar" || kindOfProblem != "sphere");
-}
+void body (); // the part where the program kinda quits... idk... :D
 
 void circle ()
 {
@@ -78,29 +34,33 @@ void circle ()
 	getline (cin, measurement_type);
 	if (measurement_type == "radius" || measurement_type == "r")
 	{
-		circleRadius ();
+		radius ();
 	}
 	if (measurement_type == "diameter" || measurement_type == "d")
 	{
-		circleDiameter ();
+		diameter ();
 	}
 	if (measurement_type == "circumference" || measurement_type == "c")
 	{
-		circleCircumference ();
+		circumference ();
 	}
 	if (measurement_type == "area" || measurement_type == "a")
 	{
-		circleArea ();
+		area ();
+	}
+	if (measurement_type == "exit")
+	{
+		exit (1);
 	}
 	else
 	{
-		cout << "Sorry, you have to choose 'radius(r)', 'diameter(d)', 'circumference(c)' or 'area(a)'\n";
+		cout << "Sorry, you have to choose 'radius(r)', 'diameter(d)', 'circumference(c)' or 'area(a)'" << endl;
 		goto retry;
 	}
 //	return 0;
 }
 
-void circleRadius ()
+void radius ()
 {
 	cout << "What is the radius of the circle? ";
 	cin >> measurement_length;
@@ -114,7 +74,7 @@ void circleRadius ()
 	afterwards ();
 }
 
-void circleDiameter ()
+void diameter ()
 {
 	cout << "What is the diameter of the circle? ";
 	cin >> measurement_length;
@@ -128,7 +88,7 @@ void circleDiameter ()
 	afterwards ();
 }
 
-void circleCircumference ()
+void circumference ()
 {
 	cout << "What is the circumference of the circle? ";
 	cin >> measurement_length;
@@ -142,7 +102,7 @@ void circleCircumference ()
 	afterwards ();
 }
 
-void circleArea ()
+void area ()
 {
 	cout << "What is the area of the circle? ";
 	cin >> measurement_length;
@@ -157,43 +117,6 @@ void circleArea ()
 	afterwards ();
 }
 
-void cylindarCalculations::set_values (float cylindarCircleMeasurementVoid, float cylindarLengthVoid)
-{
-	cylindarCircleMeasurementClass = cylindarCircleMeasurementVoid;
-	cylindarLengthClass = cylindarLengthVoid;
-}
-
-void cylindar ()
-{
-	string cylindarCircleType;
-	float cylindarCircleMeasurement, cylindarLength;
-	cylindarCalculations cylindarCalculateMeasurements;
-
-	cout << "Do you have the radius or the diameter of the circle? ";
-	getline(cin,cylindarCircleType);
-	if (cylindarCircleType == "radius")
-	{
-		cout << "What is the radius of the circle? ";
-		cin >> cylindarCircleMeasurement;
-		cout << "What is the length of the cylindar? ";
-		cin >> cylindarLength;
-		cylindarCalculateMeasurements.set_values (cylindarCircleMeasurement, cylindarLength);
-		cout << "The area of the cylindar is " << cylindarCalculateMeasurements.calculations() << endl;
-		afterwards();
-	}
-	if (cylindarCircleType == "diameter")
-	{
-		cout << "diameter\n";
-		exit(0);
-	}
-}
-
-void sphere ()
-{
-	cout << "sphere\n";
-	exit(0);
-}
-
 void afterwards ()
 {
 	string returned_from = "circle calculator";
@@ -203,7 +126,7 @@ void afterwards ()
 	if (another_one == "yes" || another_one == "y")
 	{
 		system("clear");
-		circleCalc ();
+		circle ();
 	}
 	if (another_one == "no" || another_one == "n")
 	{
@@ -212,7 +135,7 @@ void afterwards ()
 	}
 	else
 	{
-		cout << "[yes(y)/no(n)]\n";
+		cout << "[yes(y)/no(n)]" << endl;
 		goto retry;
 	}
 }
