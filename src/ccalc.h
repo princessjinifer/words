@@ -42,3 +42,21 @@ void cylindarSurfaceAreaCalculations::set_values (float cylindarCircleRadiusVoid
 	cylindarCircleRadiusClass = cylindarCircleRadiusVoid;
 	cylindarLengthClass = cylindarLengthVoid;
 }
+
+class sphereAreaCalculations {
+	float sphereCircleRadiusClass, sphereLengthClass;
+
+public:
+	void set_values (float, float);
+	float calculations ()
+	{
+		float returnedCalc = (((sphereCircleRadiusClass*sphereCircleRadiusClass*PI)*sphereLengthClass)*2)/3;
+		return (returnedCalc);
+	}
+};
+
+void sphereAreaCalculations::set_values (float sphereCircleRadiusVoid, float sphereLengthVoid)
+{
+	sphereCircleRadiusClass = sphereCircleRadiusVoid;
+	sphereLengthClass = sphereLengthVoid;
+}
