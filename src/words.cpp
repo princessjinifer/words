@@ -15,7 +15,7 @@
 string name;
 
 // void play
-string gcheck;
+string intGuessCheck;
 int guess;
 
 // void list
@@ -24,29 +24,26 @@ string names;
 // void random_chooser
 int highn;
 
-// the funtions used in the program
-void body (string where_from);
-void help ();
-void play ();
-void settings ();
-void list ();
-void credits ();
-void you_win (int final_score, int incorrectGuess);
-void highscores ();
-void circleCalc ();
+// the funtions used throughout the program
+void body(string whereFrom);
+void help();
+void play();
+void settings();
+void list();
+void credits();
+void you_win(int final_score, int incorrectGuess);
+void highscores();
+void circleCalc();
 
-int random_chooser ()
-{
+int random_chooser() {
 	string hnum;
 	int random_number;
-	ifstream highnum ("number");
-	if (highnum.is_open())
-	{
-		if ( highnum.good() )
-		{
-			getline (highnum,hnum);
+	ifstream highNumber("number");
+	if (highNumber.is_open()) {
+		if (highNumber.good()) {
+			getline(highNumber,hnum);
 		}
-		highnum.close();
+		highNumber.close();
 	}
 	stringstream highn_str(hnum);
 	highn_str >> highn;
@@ -54,106 +51,81 @@ int random_chooser ()
 	return (random_number);
 }
 
-string password_check ()
-{
+string password_check() {
 	string password;
 	
-	ifstream secret_word ("password");
-	if ( secret_word.is_open() )
-	{
-		if ( secret_word.good() )
-		{
-			getline (secret_word,password);
+	ifstream secret_word("password");
+	if (secret_word.is_open()) {
+		if (secret_word.good()) {
+			getline(secret_word,password);
 		}
 		secret_word.close();
-	}
-	else
-	{
+	} else {
 		string file_error = "error";
 		return (file_error);
 	}
 	return (password);
 }
 
-int main ()
-{
-	string returned_from = "name entry";
+int main() {
+	srand(time(NULL));
+	string returnedFrom = "name entry";
 	
 	cout << "What is your name? ";
-	getline (cin, name);
-	ofstream put_name ("names", ios::app);
-	if (put_name.is_open())
-	{
+	getline(cin, name);
+	ofstream put_name("names", ios::app);
+	if (put_name.is_open()) {
 		put_name << name << endl;
 		put_name.close();
 	}
 	system("clear");
 	cout << "Why hello there " << name << ". Glad to see you!\n";
 	cout << "Welcome to Words, the name is pretty lame, so think of a new one for me please?\n";
-	body (returned_from);
+	body(returnedFrom);
 }
 
-void body (string where_from)
-{
-	string where_to, confirm_quit;
+void body(string whereFrom) {
+	string whereTo, confirm_quit;
 
-	cout << "Now that you have come from the " << where_from << ";\n";
-	accident:
-	cout << "Type your command here, anything not in the help will end the program\n";
-	cout << "Type 'help' if you don't know any of the commands\n";
-	cout << ": ";
-	getline (cin, where_to);
-	if (where_to == "help" || where_to == "Help" || where_to == "HELP")
-	{
-		help ();
-	}
-	if (where_to == "settings" || where_to == "Settings" || where_to == "SETTINGS")
-	{
-		settings ();
-	}
-	if (where_to == "list" || where_to == "List" || where_to == "LIST")
-	{
-		list ();
-	}
-	if (where_to == "play" || where_to == "Play" || where_to == "PLAY")
-	{
-		play ();
-	}
-	if (where_to == "credits" || where_to == "Credits" || where_to == "CREDITS")
-	{
-		credits ();
-	}
-	if (where_to == "highscores" || where_to == "Highscores" || where_to == "HIGHSCORES")
-	{
-		highscores ();
-	}
-	if (where_to == "circle" || where_to == "Circle" || where_to == "CIRCLE")
-	{
-		circleCalc ();
-	}
-	else
-	{
-		while (true)
-		{
-			cout << "Are you sure you want to quit? [yes(y)/no(n)] ";
-			getline (cin, confirm_quit);
-			if (confirm_quit == "yes" || confirm_quit == "Yes" || confirm_quit == "y" || confirm_quit == "Y")
-			{
-				exit (1);
-			}
-			if (confirm_quit == "no" || confirm_quit == "No" || confirm_quit == "n" || confirm_quit == "N")
-			{
-				system("clear");
-				goto accident;
-			}
-			cout << "That is not one of my known commands, enter one of the given choices.\n";
+	cout << "you have come from the " << whereFrom << ";\n";
+	while(true) {
+		cout << "Type your command here, anything not in the help will end the program\n";
+		cout << "Type 'help' if you don't know any of the commands\n";
+		cout << ": ";
+		getline(cin, whereTo);
+		if (whereTo == "help" || whereTo == "Help" || whereTo == "HELP") {
+			help();
+		}
+		if (whereTo == "settings" || whereTo == "Settings" || whereTo == "SETTINGS") {
+			settings();
+		}
+		if (whereTo == "list" || whereTo == "List" || whereTo == "LIST") {
+			list();
+		}
+		if (whereTo == "play" || whereTo == "Play" || whereTo == "PLAY") {
+			play();
+		}
+		if (whereTo == "credits" || whereTo == "Credits" || whereTo == "CREDITS") {
+			credits();
+		}
+		if (whereTo == "highscores" || whereTo == "Highscores" || whereTo == "HIGHSCORES") {
+			highscores();
+		}
+		if (whereTo == "circle" || whereTo == "Circle" || whereTo == "CIRCLE") {
+			circleCalc();
+		}
+		if (whereTo == "exit" || whereTo == "Exit" || whereTo == "EXIT" || whereTo == "quit" || whereTo == "Quit" || whereTo == "QUIT") {
+			exit(1);
+		} else {
+			system("clear");
+			
+			cout << "Sorry, but " << whereTo << " is not one of my known commands, enter one of the given choices.\n\n";
 		}
 	}
 }
 
-void help ()
-{
-	string returned_from = "help";
+void help() {
+	string returnedFrom = "help";
 	
 	cout << "Commands:\n";
 	cout << "help: displays this list of commands\n";
@@ -165,65 +137,55 @@ void help ()
 	cout << returnToMenu;
 	cin.get();
 	system("clear");
-	body (returned_from);
+	body(returnedFrom);
 }
 
-void settings ()
-{
+void settings() {
 	string new_number, word, newword, change;
-	string secretw = password_check ();
-	string returned_from = "settings";
+	string secretw = password_check();
+	string returnedFrom = "settings";
 
-	if (secretw == "error")
-	{
+	if (secretw == "error") {
 		cout << "Sorry there was a problem with the stored password file.\n";
 		cout << returnToMenu;
 		cin.get();
 		system("clear");
-		body (returned_from);
+		body(returnedFrom);
 	}
-	while (word != secretw)
-	{
+	while (word != secretw) {
 		system("clear");
 		cout << "Password: ";
-		getline (cin, word);
+		getline(cin, word);
 		system("clear");
 	}
 	cout << "Access Granted\n";
-	while (true)
-	{
+	while (true) {
 		cout << "Please enter a number\n";
 		cout << "1. Return to the program\n";
 		cout << "2. Change the settings password\n";
 		cout << "3. Change the high number for the guessing game\n";
 		cout << ": ";
-		getline (cin, change);
-		if (change == "1")
-		{
+		getline(cin, change);
+		if (change == "1") {
 			system("clear");
-			body (returned_from);
+			body(returnedFrom);
 		}
-		if (change == "2")
-		{
-			ofstream password ("password", ios::trunc);
-			if (password.is_open())
-			{
+		if (change == "2") {
+			ofstream password("password", ios::trunc);
+			if (password.is_open()) {
 				cout << "Please enter the new password" << endl;
-				getline (cin, newword);
+				getline(cin, newword);
 				password << newword;
 				password.close();
 				system("clear");
 				cout << "Password change successful" << endl;
-			}
-			else cout << "Sorry, there was an error opening the password file for editing";
+			} else cout << "Sorry, there was an error opening the password file for editing";
 		}
-		if (change == "3")
-		{
-			ofstream number ("number", ios::trunc);
-			if (number.is_open())
-			{
+		if (change == "3") {
+			ofstream number("number", ios::trunc);
+			if (number.is_open()) {
 				cout << "Please enter the new number" << endl;
-				getline (cin, new_number);
+				getline(cin, new_number);
 				number << new_number;
 				number.close();
 				system("clear");
@@ -236,16 +198,13 @@ void settings ()
     }
 }
 
-void list ()
-{
-	string returned_from = "list of names";
+void list () {
+	string returnedFrom = "list of names";
 	
-	ifstream users ("names");
-	if (users.is_open())
-	{
-		while ( users.good())
-		{
-			getline (users,names);
+	ifstream users("names");
+	if (users.is_open()) {
+		while (users.good()) {
+			getline(users,names);
 			cout << names << endl;
 		}
 		users.close();
@@ -254,12 +213,11 @@ void list ()
 	cout << returnToMenu;
 	cin.get();
 	system("clear");
-	body (returned_from);
+	body(returnedFrom);
 }
 
-void credits ()
-{
-	string returned_from = "credits";
+void credits() {
+	string returnedFrom = "credits";
 	
 	system("clear");
 	cout << "Princessjinifer: Owner and main programmer http://goo.gl/i6qvk\n";
@@ -267,105 +225,88 @@ void credits ()
 	cout << returnToMenu;
 	cin.get();
 	system("clear");
-	body (returned_from);
+	body(returnedFrom);
 }
 
-void highscores ()
-{
+void highscores() {
 	string highscore;
-	string returned_from = "highscores";
+	string returnedFrom = "highscores";
 
-	ifstream show_scores ("highscores");
-	if (show_scores.is_open())
-	{
-		while ( show_scores.good())
-		{
-			getline (show_scores,highscore);
+	ifstream show_scores("highscores");
+	if (show_scores.is_open()) {
+		while (show_scores.good()) {
+			getline(show_scores,highscore);
 			cout << highscore << endl;
 		}
 		show_scores.close();
-	}
-	else cout << "Unable to open file";
+	} else cout << "Unable to open file";
 	cout << returnToMenu;
 	cin.get();
 	system("clear");
-	body (returned_from);
+	body(returnedFrom);
 }
 
-void play ()
-{
+void play() {
 	int rando;
-	rando = random_chooser ();
+	rando = random_chooser();
+	int score=0;
+	int incorrect_guess=0;
 
 	system("clear");
 	cout << "I have chosen a number between 1 and " << highn << ", you are going to take a guess and I will tell you if you are too high or too low...\n";
-	int score=0;
-	int incorrect_guess=0;
-//	cout << rando << endl; // used for developer purposes only
-	game:
-	while (true)
-	{
-		cout << "Guess a number: ";
-		getline (cin, gcheck);
-		stringstream guessc(gcheck);
-		if (guessc >> guess)
+	while(true) {
+		while (true) {
+			cout << "Guess a number: ";
+			getline(cin, intGuessCheck);
+			stringstream ssGuessCheck(intGuessCheck);
+			if (ssGuessCheck >> guess) {
+				break;
+			}
+				cout << "Sorry, you have to guess a number\n";
+				incorrect_guess++;
+		}
+		score++;
+		if (guess==rando) {
+			you_win(score, incorrect_guess);
 			break;
-			cout << "Sorry, you have to guess a number\n";
-			incorrect_guess++;
+		}
+		if (guess<rando) {
+			cout << "Your guess is too low, guess higher!\n";
+		}
+		if (guess>rando) {
+			if (guess > highn) {
+				cout << "Sorry, you have to guess a number between 1 and " << highn << endl;
+				incorrect_guess++;
+			} else {
+				cout << "Your guess is too high, guess lower!\n";
+			}
+		}
 	}
-	if (guess>highn)
-	{
-		cout << "Sorry, you have to guess a number between 1 and " << highn << endl;
-		incorrect_guess++;
-		goto game;
-	}
-	score++;
-	if (guess==rando)
-	{
-		you_win (score, incorrect_guess);
-	}
-	if (guess<rando)
-	{
-		cout << "Your guess is too low, guess higher!\n";
-	 	goto game;
-	}
-	if (guess>rando)
-	{
-		cout << "Your guess is too high, guess lower!\n";
-	 	goto game;
-	}
-//	}
 }
 
-void you_win (int final_score, int incorrectGuess) // this is the procedure after the person has won the game :3
-{
+void you_win(int final_score, int incorrectGuess) {
 	string playagain;
-	string returned_from = "game";
+	string returnedFrom = "game";
 
-	cout << "You guessed correctly!\n"; // yay! you won!
+	cout << "You guessed correctly!\n";
 	cout << "You guessed " << final_score << " times before winning o: I know you can do better than that!!\n";
-	if (incorrectGuess > 0)
-	{
+	if (incorrectGuess > 0) {
 		cout << "You guessed " << incorrectGuess << " words/blank guesses/numbers higher than " << highn << ", You should be a little more careful :P\n";
 	}
-	ofstream put_score ("highscores", ios::app);
-	if (put_score.is_open())
-	{
+	ofstream put_score("highscores", ios::app);
+	if (put_score.is_open()) {
 		put_score << name << "\t\t" << final_score << "\t\t" << incorrectGuess << endl;
 		put_score.close();
 	}
-	while (true)
-	{
+	while (true) {
 		cout << "Play again? (y,n): ";
-		getline (cin, playagain);
-		if (playagain == "y")
-		{
-			play ();
+		getline(cin, playagain);
+		if (playagain == "y") {
+			play();
 		}
-		if (playagain == "n")
-		{
+		if (playagain == "n") {
 			system("clear");
-			body (returned_from);
+			body(returnedFrom);
 		}
 		cout << "Sorry, you have to use either 'y' or 'n'...\n";
 	}

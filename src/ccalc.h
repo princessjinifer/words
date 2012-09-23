@@ -47,7 +47,7 @@ class sphereAreaCalculations {
 	float sphereCircleRadiusClass, sphereLengthClass;
 
 public:
-	void set_values (float, float);
+	void set_values (float);
 	float calculations ()
 	{
 		float returnedCalc = (((sphereCircleRadiusClass*sphereCircleRadiusClass*PI)*sphereLengthClass)*2)/3;
@@ -55,8 +55,8 @@ public:
 	}
 };
 
-void sphereAreaCalculations::set_values (float sphereCircleRadiusVoid, float sphereLengthVoid)
+void sphereAreaCalculations::set_values (float sphereCircleRadiusVoid)
 {
 	sphereCircleRadiusClass = sphereCircleRadiusVoid;
-	sphereLengthClass = sphereLengthVoid;
+	sphereLengthClass = sphereCircleRadiusVoid*2;
 }

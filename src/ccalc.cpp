@@ -32,7 +32,7 @@ void circleCalc ()
 	while (true)
 	{
 		cout << "What do you want to calculate?\n\n";
-		cout << "\t1. Cirlce (radius, diameter, circumference, area)\n";
+		cout << "\t1. Circle (radius, diameter, circumference, area)\n";
 		cout << "\t2. Cylindar (area, surface area)\n";
 		cout << "\t3. Sphere (area)\n\n";
 		cout << "What are we trying to calculate here? ";
@@ -199,9 +199,15 @@ void cylindar ()
 void sphere ()
 {
 //	string returned_from = "ERROR: typo in the sphere calculator";
+	float sphereCircleMeasurement;
+	sphereAreaCalculations sphereAreaCalculateMeasurements;
 
-	cout << "sphere :p\n";
-	exit(0);
+	cout << "What is the radius of the cylindar? ";
+	cin >> sphereCircleMeasurement;
+	cin.ignore();
+	sphereAreaCalculateMeasurements.set_values (sphereCircleMeasurement);
+	cout << "The area of the sphere is " << sphereAreaCalculateMeasurements.calculations() << endl << endl;
+	afterwards();
 }
 
 void afterwards ()
