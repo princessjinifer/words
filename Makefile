@@ -6,7 +6,7 @@ CFLAGS=-c -Wall
 all: words
 
 words: src/words.o src/ccalc.o
-	$(CC) src/words.o src/ccalc.o -o ../personal/words
+	$(CC) src/words.o src/ccalc.o -o bin/words
 
 words.o: src/words.cpp
 	$(CC) $(CFLAGS) src/words.cpp
