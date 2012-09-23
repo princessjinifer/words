@@ -1,10 +1,10 @@
 /*	Filename: dirCheck.cpp
  *	Developers: Micah Butler (princessjinifer)
  *				Lakshmipathi.G (Laks)
- *	Created: 9/22/2012
- * 	Edited: 9/22/2012
+ *	Created: 9/23/2012
+ * 	Edited: 9/23/2012
  *	Checks to see if the user is in the correct directory.
- *	v.0.2.0.1.1
+ *	v.0.2.1
 */
 
 #include "words.h"
