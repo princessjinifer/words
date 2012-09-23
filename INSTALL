@@ -4,20 +4,20 @@ installing the binary doens't work at the moment
 wait for a future release to fix that :)
 
 execute with the commands:
-cd words-0.2/bin/
+cd bin/
 ./words
 
-NOTE: changing the directory is important, ./words-0.2/bin/32-bit/words will break some of the features.
+NOTE: changing the directory is important, ./bin/words will break some of the features.
 
 How to install binary from source:
 ---------------------------------
 Under GNU/Linux, compile it:
-make
+./compile.sh
 
 copying the files doesn't work right now
-wait for a future release to be able to do that...
+wait for a future release for that feature...
 
 execute it with:
-cd src/copy 
-NOTE: make sure you are in the directory with the Makefile before doing this
+cd bin/ 
+NOTE: make sure you are in the same directory as the compile script before doing this
 ./words

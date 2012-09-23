@@ -20,24 +20,19 @@ using namespace std;
 
 // int main
 
-extern string name; // for the name exchange
+extern string name; // the users name
 
 // void play
 
-extern string gcheck; // for checking the guess
-extern int guess; // guessing the number in the game
+extern int guess; // the number the user guesses in the game
 
 // void list
 
-extern string names; // extracts the names file to this
+extern string names; // contents of the names file
 
 // void random_chooser
 
-extern int highn; // used to generate the random number
-
-// void highscores
-
-extern string highscore; // for displaying the highscores of the game
+extern int highNumberInt; // the integer version of the number file
 
 // ccalc.cpp
 

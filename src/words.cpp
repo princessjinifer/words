@@ -2,27 +2,26 @@
  *	Developers: Micah Butler (princessjinifer)
  *				Lakshmipathi.G (Laks)
  *	Created: Sometime 2010
- * 	Edited: 2/1/2012
+ * 	Edited: 9/22/2012
  *	It has no functionality, it does nothing useful, just has a few things mostly related to the game...
- *	v.0.2.0.1
+ *	v.0.2.0.1.1
 */
 
 #include "words.h"
 
 #define returnToMenu "press ENTER to get back to the menu"
 
-// int main
+// int main()
 string name;
 
-// void play
-string intGuessCheck;
+// void play()
 int guess;
 
-// void list
+// void list()
 string names;
 
-// void random_chooser
-int highn;
+// void random_chooser()
+int highNumberInt;
 
 // the funtions used throughout the program
 void body(string whereFrom);
@@ -31,24 +30,25 @@ void play();
 void settings();
 void list();
 void credits();
-void you_win(int final_score, int incorrectGuess);
+void youWin(int finalScore, int incorrectGuess);
 void highscores();
 void circleCalc();
 
 int random_chooser() {
-	string hnum;
-	int random_number;
-	ifstream highNumber("number");
-	if (highNumber.is_open()) {
-		if (highNumber.good()) {
-			getline(highNumber,hnum);
+	string highNumberString;
+	int randomNumber;
+	
+	ifstream highNumberFile("number");
+	if (highNumberFile.is_open()) {
+		if (highNumberFile.good()) {
+			getline(highNumberFile,highNumberString);
 		}
-		highNumber.close();
+		highNumberFile.close();
 	}
-	stringstream highn_str(hnum);
-	highn_str >> highn;
-	random_number = rand() % highn +1;
-	return (random_number);
+	stringstream ssHighNumberString(highNumberString);
+	ssHighNumberString >> highNumberInt;
+	randomNumber = rand() % highNumberInt +1;
+	return (randomNumber);
 }
 
 string password_check() {
@@ -141,12 +141,13 @@ void help() {
 }
 
 void settings() {
-	string new_number, word, newword, change;
+	int change;
+	string new_number, word, newword;
 	string secretw = password_check();
 	string returnedFrom = "settings";
 
 	if (secretw == "error") {
-		cout << "Sorry there was a problem with the stored password file.\n";
+		cout << "Error (Code 1). Problem with password file. Email princessjinifer@gmail.com for a fix\n";
 		cout << returnToMenu;
 		cin.get();
 		system("clear");
@@ -160,17 +161,17 @@ void settings() {
 	}
 	cout << "Access Granted\n";
 	while (true) {
-		cout << "Please enter a number\n";
+		cout << "Enter a number\n";
 		cout << "1. Return to the program\n";
 		cout << "2. Change the settings password\n";
 		cout << "3. Change the high number for the guessing game\n";
 		cout << ": ";
-		getline(cin, change);
-		if (change == "1") {
+		cin >> change;
+		if (change == 1) {
 			system("clear");
 			body(returnedFrom);
 		}
-		if (change == "2") {
+		if (change == 2) {
 			ofstream password("password", ios::trunc);
 			if (password.is_open()) {
 				cout << "Please enter the new password" << endl;
@@ -179,9 +180,9 @@ void settings() {
 				password.close();
 				system("clear");
 				cout << "Password change successful" << endl;
-			} else cout << "Sorry, there was an error opening the password file for editing";
+			} else cout << "Sorry, there was an error opening the password file";
 		}
-		if (change == "3") {
+		if (change == 3) {
 			ofstream number("number", ios::trunc);
 			if (number.is_open()) {
 				cout << "Please enter the new number" << endl;
@@ -201,13 +202,13 @@ void settings() {
 void list () {
 	string returnedFrom = "list of names";
 	
-	ifstream users("names");
-	if (users.is_open()) {
-		while (users.good()) {
-			getline(users,names);
+	ifstream usersFile("names");
+	if (usersFile.is_open()) {
+		while (usersFile.good()) {
+			getline(usersFile,names);
 			cout << names << endl;
 		}
-		users.close();
+		usersFile.close();
 	}
 	else cout << "Unable to open file";
 	cout << returnToMenu;
@@ -220,7 +221,7 @@ void credits() {
 	string returnedFrom = "credits";
 	
 	system("clear");
-	cout << "Princessjinifer: Owner and main programmer http://goo.gl/i6qvk\n";
+	cout << "Princessjinifer: Owner and main programmer http://goo.gl/uj0E4\n";
 	cout << "Lakshmipathi.G: Main tester and secondary programmer http://www.giis.co.in/\n\n";
 	cout << returnToMenu;
 	cin.get();
@@ -232,13 +233,13 @@ void highscores() {
 	string highscore;
 	string returnedFrom = "highscores";
 
-	ifstream show_scores("highscores");
-	if (show_scores.is_open()) {
-		while (show_scores.good()) {
-			getline(show_scores,highscore);
+	ifstream showHighscores("highscores");
+	if (showHighscores.is_open()) {
+		while (showHighscores.good()) {
+			getline(showHighscores,highscore);
 			cout << highscore << endl;
 		}
-		show_scores.close();
+		showHighscores.close();
 	} else cout << "Unable to open file";
 	cout << returnToMenu;
 	cin.get();
@@ -250,10 +251,11 @@ void play() {
 	int rando;
 	rando = random_chooser();
 	int score=0;
-	int incorrect_guess=0;
+	int incorrectGuess=0;
+	string intGuessCheck;
 
 	system("clear");
-	cout << "I have chosen a number between 1 and " << highn << ", you are going to take a guess and I will tell you if you are too high or too low...\n";
+	cout << "I have chosen a number between 1 and " << highNumberInt << ", you are going to take a guess and I will tell you if you are too high or too low...\n";
 	while(true) {
 		while (true) {
 			cout << "Guess a number: ";
@@ -263,20 +265,20 @@ void play() {
 				break;
 			}
 				cout << "Sorry, you have to guess a number\n";
-				incorrect_guess++;
+				incorrectGuess++;
 		}
 		score++;
 		if (guess==rando) {
-			you_win(score, incorrect_guess);
+			youWin(score, incorrectGuess);
 			break;
 		}
 		if (guess<rando) {
 			cout << "Your guess is too low, guess higher!\n";
 		}
 		if (guess>rando) {
-			if (guess > highn) {
-				cout << "Sorry, you have to guess a number between 1 and " << highn << endl;
-				incorrect_guess++;
+			if (guess > highNumberInt) {
+				cout << "Sorry, you have to guess a number between 1 and " << highNumberInt << endl;
+				incorrectGuess++;
 			} else {
 				cout << "Your guess is too high, guess lower!\n";
 			}
@@ -284,29 +286,31 @@ void play() {
 	}
 }
 
-void you_win(int final_score, int incorrectGuess) {
+void youWin(int finalScore, int incorrectGuess) {
 	string playagain;
 	string returnedFrom = "game";
 
 	cout << "You guessed correctly!\n";
-	cout << "You guessed " << final_score << " times before winning o: I know you can do better than that!!\n";
+	cout << "You guessed " << finalScore << " times before winning o: I know you can do better than that!!\n";
 	if (incorrectGuess > 0) {
-		cout << "You guessed " << incorrectGuess << " words/blank guesses/numbers higher than " << highn << ", You should be a little more careful :P\n";
+		cout << "You guessed " << incorrectGuess << " words/blank guesses/numbers higher than " << highNumberInt << ", You should be a little more careful :P\n";
 	}
-	ofstream put_score("highscores", ios::app);
-	if (put_score.is_open()) {
-		put_score << name << "\t\t" << final_score << "\t\t" << incorrectGuess << endl;
-		put_score.close();
+	ofstream putScore("highscores", ios::app);
+	if (putScore.is_open()) {
+		putScore << name << "\t\t" << finalScore << "\t\t" << incorrectGuess << endl;
+		putScore.close();
 	}
 	while (true) {
 		cout << "Play again? (y,n): ";
 		getline(cin, playagain);
 		if (playagain == "y") {
 			play();
+			break;
 		}
 		if (playagain == "n") {
 			system("clear");
 			body(returnedFrom);
+			break;
 		}
 		cout << "Sorry, you have to use either 'y' or 'n'...\n";
 	}
