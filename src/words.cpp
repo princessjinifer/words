@@ -33,6 +33,7 @@ void credits();
 void youWin(int finalScore, int incorrectGuess);
 void highscores();
 void circleCalc();
+bool directoryCheck();
 
 int random_chooser() {
 	string highNumberString;
@@ -68,6 +69,13 @@ string password_check() {
 }
 
 int main() {
+	bool dirCheck;
+	dirCheck = directoryCheck();
+	if (dirCheck == false) {
+		cout << "ERROR (Code 2). use the command \"cd bin\" and then start the program again, or\nmove the four files in bin to the same place as the executable if you moved that.\n";
+		cout << "If the error still happens, contact princessjinifer@gmail.com or just download\nthe program again.\n";
+		exit(1);
+	}
 	srand(time(NULL));
 	string returnedFrom = "name entry";
 	
