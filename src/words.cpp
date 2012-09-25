@@ -24,6 +24,7 @@ string names;
 int highNumberInt;
 
 // the funtions used throughout the program
+void upperCase(char *pWhereTo);
 void body(string whereFrom);
 void help();
 void play();
@@ -68,6 +69,15 @@ string password_check() {
 	return (password);
 }
 
+void upperCase(char *pWhereTo) {
+	while (*pWhereTo) {
+		if (islower(*pWhereTo)) {
+			*pWhereTo = toupper(*pWhereTo);
+		}
+		*pWhereTo++;
+	}
+}
+
 int main() {
 	bool dirCheck;
 	dirCheck = directoryCheck();
@@ -93,41 +103,38 @@ int main() {
 }
 
 void body(string whereFrom) {
-	string whereTo, confirm_quit;
+	string confirm_quit;
+	char *whereTo;
+	char temp[10];
 
 	cout << "you have come from the " << whereFrom << ";\n";
 	while(true) {
 		cout << "Type your command here, anything not in the help will end the program\n";
 		cout << "Type 'help' if you don't know any of the commands\n";
 		cout << ": ";
-		getline(cin, whereTo);
-		if (whereTo == "help" || whereTo == "Help" || whereTo == "HELP") {
+		cin >> temp;
+		whereTo = temp;
+		upperCase(whereTo);
+		if (whereTo == "HELP") {
 			help();
-		}
-		if (whereTo == "settings" || whereTo == "Settings" || whereTo == "SETTINGS") {
+		} else if (whereTo == "SETTINGS") {
 			settings();
-		}
-		if (whereTo == "list" || whereTo == "List" || whereTo == "LIST") {
+		} else if (whereTo == "LIST") {
 			list();
-		}
-		if (whereTo == "play" || whereTo == "Play" || whereTo == "PLAY") {
+		} else if (whereTo =="PLAY") {
 			play();
-		}
-		if (whereTo == "credits" || whereTo == "Credits" || whereTo == "CREDITS") {
+		} else if (whereTo == "CREDITS") {
 			credits();
-		}
-		if (whereTo == "highscores" || whereTo == "Highscores" || whereTo == "HIGHSCORES") {
+		} else if (whereTo == "HIGHSCORES") {
 			highscores();
-		}
-		if (whereTo == "circle" || whereTo == "Circle" || whereTo == "CIRCLE") {
+		} else if (whereTo == "CIRCLE") {
 			circleCalc();
-		}
-		if (whereTo == "exit" || whereTo == "Exit" || whereTo == "EXIT" || whereTo == "quit" || whereTo == "Quit" || whereTo == "QUIT") {
+		} else if (whereTo == "EXIT" || whereTo == "QUIT") {
 			exit(1);
 		} else {
 			system("clear");
 			
-			cout << "Sorry, but " << whereTo << " is not one of my known commands, enter one of the given choices.\n\n";
+			cout << "Sorry, but " << temp << " is not one of my known commands, enter help to see a list of\navailable choices.\n\n";
 		}
 	}
 }
