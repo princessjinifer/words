@@ -2,9 +2,9 @@
  *	Developers: Micah Butler (princessjinifer)
  *				Lakshmipathi.G (Laks)
  *	Created: Sometime 2011
- *	Edited: 9/23/2012
+ *	Edited: 3/14/2013
  *	It has no functionality, it does nothing useful, just has a few things mostly related to the game...
- *	v.0.2.1
+ *	v.0.2.1.1
 */
 
 #include <iostream>
@@ -15,31 +15,10 @@
 #include <string>
 #include <cstring>
 #include <math.h>
+#include <ctype.h>
 
 using namespace std;
 
-// int main
+// dirCheck.cpp
 
-extern string name; // the users name
-
-// void play
-
-extern int guess; // the number the user guesses in the game
-
-// void list
-
-extern string names; // contents of the names file
-
-// void random_chooser
-
-extern int highNumberInt; // the integer version of the number file
-
-// ccalc.cpp
-
-extern string measurement_type;
-extern string another_one;
-extern float measurement_length;
-extern float measurement_length_diameter;
-extern float measurement_length_circumference;
-extern float measurement_length_radius;
-extern float measurement_length_area;
+extern bool storedAtHome;

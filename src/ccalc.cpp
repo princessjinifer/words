@@ -52,74 +52,77 @@ void circleCalc ()
 			sphere ();
 			break;
 		}
-	}; //while (kindOfProblem != "circle" || kindOfProblem != "cylindar" || kindOfProblem != "sphere");
+	}
 }
 
 void circles ()
 {
 	system("clear");
-	retry:
-	cout << "Do you have the radius (r), diameter (d), circumference (c) or area (a) of the circle? ";
-	getline (cin, measurement_type);
-	if (measurement_type == "radius" || measurement_type == "r")
-	{
-		cout << "What is the radius of the circle? ";
-		cin >> measurement_length;
-		cin.ignore();
-		measurement_length_diameter=measurement_length*2;
-		measurement_length_circumference=measurement_length_diameter*PI;
-		measurement_length_area=PI*measurement_length*measurement_length;
-		cout << "The diameter is " << measurement_length_diameter << endl;
-		cout << "The circumference is " << measurement_length_circumference << endl;
-		cout << "The area is " << measurement_length_area << endl;
-		afterwards ();
+	while (true) {
+		cout << "Do you have the radius (r), diameter (d), circumference (c) or area (a) of the circle? ";
+		getline (cin, measurement_type);
+		if (measurement_type == "radius" || measurement_type == "r")
+		{
+			cout << "What is the radius of the circle? ";
+			cin >> measurement_length;
+			cin.ignore();
+			measurement_length_diameter=measurement_length*2;
+			measurement_length_circumference=measurement_length_diameter*PI;
+			measurement_length_area=PI*measurement_length*measurement_length;
+			cout << "The diameter is " << measurement_length_diameter << endl;
+			cout << "The circumference is " << measurement_length_circumference << endl;
+			cout << "The area is " << measurement_length_area << endl;
+			afterwards ();
+			break;
+		}
+		if (measurement_type == "diameter" || measurement_type == "d")
+		{
+			cout << "What is the diameter of the circle? ";
+			cin >> measurement_length;
+			cin.ignore();
+			measurement_length_circumference=measurement_length*PI;
+			measurement_length_radius=measurement_length/2;
+			measurement_length_area=measurement_length_radius*measurement_length_radius*PI;
+			cout << "The circumference is " << measurement_length_circumference << endl;
+			cout << "The radius is " << measurement_length_radius << endl;
+			cout << "The area is " << measurement_length_area << endl;
+			afterwards ();
+			break;
+		}
+		if (measurement_type == "circumference" || measurement_type == "c")
+		{
+			cout << "What is the circumference of the circle? ";
+			cin >> measurement_length;
+			cin.ignore();
+			measurement_length_radius=measurement_length/PI/2;
+			measurement_length_diameter=measurement_length/PI;
+			measurement_length_area=measurement_length_radius*measurement_length_radius*PI;
+			cout << "The radius is " << measurement_length_radius << endl;
+			cout << "The diameter is " << measurement_length_diameter << endl;
+			cout << "The area is " << measurement_length_area << endl;
+			afterwards ();
+			break;
+		}
+		if (measurement_type == "area" || measurement_type == "a")
+		{
+			cout << "What is the area of the circle? ";
+			cin >> measurement_length;
+			cin.ignore();
+			measurement_length_area_radius=measurement_length/PI;
+			measurement_length_radius=sqrt(measurement_length_area_radius);
+			measurement_length_diameter=measurement_length_radius*2;
+			measurement_length_circumference=measurement_length_diameter*PI;
+			cout << "The radius is " << measurement_length_radius << endl;
+			cout << "The diameter is " << measurement_length_diameter << endl;
+			cout << "The circumference is " << measurement_length_circumference << endl;
+			afterwards ();
+			break;
+		}
+		else
+		{
+			cout << "Sorry, you have to choose 'radius(r)', 'diameter(d)', 'circumference(c)' or 'area(a)'\n";
+		}
 	}
-	if (measurement_type == "diameter" || measurement_type == "d")
-	{
-		cout << "What is the diameter of the circle? ";
-		cin >> measurement_length;
-		cin.ignore();
-		measurement_length_circumference=measurement_length*PI;
-		measurement_length_radius=measurement_length/2;
-		measurement_length_area=measurement_length_radius*measurement_length_radius*PI;
-		cout << "The circumference is " << measurement_length_circumference << endl;
-		cout << "The radius is " << measurement_length_radius << endl;
-		cout << "The area is " << measurement_length_area << endl;
-		afterwards ();
-	}
-	if (measurement_type == "circumference" || measurement_type == "c")
-	{
-		cout << "What is the circumference of the circle? ";
-		cin >> measurement_length;
-		cin.ignore();
-		measurement_length_radius=measurement_length/PI/2;
-		measurement_length_diameter=measurement_length/PI;
-		measurement_length_area=measurement_length_radius*measurement_length_radius*PI;
-		cout << "The radius is " << measurement_length_radius << endl;
-		cout << "The diameter is " << measurement_length_diameter << endl;
-		cout << "The area is " << measurement_length_area << endl;
-		afterwards ();
-	}
-	if (measurement_type == "area" || measurement_type == "a")
-	{
-		cout << "What is the area of the circle? ";
-		cin >> measurement_length;
-		cin.ignore();
-		measurement_length_area_radius=measurement_length/PI;
-		measurement_length_radius=sqrt(measurement_length_area_radius);
-		measurement_length_diameter=measurement_length_radius*2;
-		measurement_length_circumference=measurement_length_diameter*PI;
-		cout << "The radius is " << measurement_length_radius << endl;
-		cout << "The diameter is " << measurement_length_diameter << endl;
-		cout << "The circumference is " << measurement_length_circumference << endl;
-		afterwards ();
-	}
-	else
-	{
-		cout << "Sorry, you have to choose 'radius(r)', 'diameter(d)', 'circumference(c)' or 'area(a)'\n";
-		goto retry;
-	}
-//	return 0;
 }
 
 void cylindar ()
@@ -213,22 +216,24 @@ void sphere ()
 void afterwards ()
 {
 	string returned_from = "circle calculator";
-	retry:
-	cout << "Do you have another one? [yes(y)/no(n)] ";
-	getline (cin, another_one);
-	if (another_one == "yes" || another_one == "y")
-	{
-		system("clear");
-		circleCalc ();
-	}
-	if (another_one == "no" || another_one == "n")
-	{
-		system("clear");
-		body (returned_from);
-	}
-	else
-	{
-		cout << "[yes(y)/no(n)]\n";
-		goto retry;
+	while (true) {
+		cout << "Do you have another one? [yes(y)/no(n)] ";
+		getline (cin, another_one);
+		if (another_one == "yes" || another_one == "y")
+		{
+			system("clear");
+			circleCalc ();
+			break;
+		}
+		if (another_one == "no" || another_one == "n")
+		{
+			system("clear");
+			body (returned_from);
+			break;
+		}
+		else
+		{
+			cout << "[yes(y)/no(n)]\n";
+		}
 	}
 }

@@ -2,26 +2,20 @@
  *	Developers: Micah Butler (princessjinifer)
  *				Lakshmipathi.G (Laks)
  *	Created: Sometime 2010
- * 	Edited: 9/23/2012
+ * 	Edited: 3/14/2013
  *	It has no functionality, it does nothing useful, just has a few things mostly related to the game...
- *	v.0.2.1
+ *	v.0.2.1.1
 */
 
 #include "words.h"
 
 #define returnToMenu "press ENTER to get back to the menu"
 
-// int main()
-string name;
-
-// void play()
-int guess;
-
-// void list()
-string names;
-
-// void random_chooser()
-int highNumberInt;
+// global variables
+string versionNumber = "-0.2.1.1";
+string home = getenv("HOME");
+string name; // the users name is stored here
+int highNumberInt; // the high number of "guess the number between 1 and __"
 
 // the funtions used throughout the program
 void upperCase(char *pWhereTo);
@@ -35,12 +29,32 @@ void youWin(int finalScore, int incorrectGuess);
 void highscores();
 void circleCalc();
 bool directoryCheck();
+void processInput();
+
+string homeFolder(string fileName) {
+	string dataDir = "/.words/";
+	string finalDir;
+	finalDir += home;
+	finalDir += dataDir;
+	finalDir += fileName;
+	
+	return finalDir;
+}
+
+string fileLocations (string fileName) {
+	if (storedAtHome) {
+		return homeFolder(fileName);
+	} else {
+		return fileName;
+	}
+}
 
 int random_chooser() {
 	string highNumberString;
+	string filePath = fileLocations("number");
 	int randomNumber;
 	
-	ifstream highNumberFile("number");
+	ifstream highNumberFile(filePath.c_str());
 	if (highNumberFile.is_open()) {
 		if (highNumberFile.good()) {
 			getline(highNumberFile,highNumberString);
@@ -55,13 +69,14 @@ int random_chooser() {
 
 string password_check() {
 	string password;
+	string filePath = fileLocations("password");
 	
-	ifstream secret_word("password");
-	if (secret_word.is_open()) {
-		if (secret_word.good()) {
-			getline(secret_word,password);
+	ifstream secretWord(filePath.c_str());
+	if (secretWord.is_open()) {
+		if (secretWord.good()) {
+			getline(secretWord,password);
 		}
-		secret_word.close();
+		secretWord.close();
 	} else {
 		string file_error = "error";
 		return (file_error);
@@ -69,29 +84,25 @@ string password_check() {
 	return (password);
 }
 
-void upperCase(char *pWhereTo) {
-	while (*pWhereTo) {
-		if (islower(*pWhereTo)) {
-			*pWhereTo = toupper(*pWhereTo);
-		}
-		*pWhereTo++;
-	}
-}
-
 int main() {
-	bool dirCheck;
-	dirCheck = directoryCheck();
-	if (dirCheck == false) {
-		cout << "ERROR (Code 2). use the command \"cd bin\" and then start the program again, or\nmove the four files in bin to the same place as the executable if you moved that.\n";
-		cout << "If the error still happens, contact princessjinifer@gmail.com or just download\nthe program again.\n";
+	//bool dirCheck;
+	bool dirCheck = directoryCheck();
+	if (!dirCheck) {
+		cout << "ERROR (Code 2). move to the bin directory in the words" << versionNumber << " and then start\nthe program again, or copy the four data files (found in the words" << versionNumber << "\ndirectory you downloaded) in to the same folder that you moved the executable\nto.\n";
+		cout << "If the error still occurs, contact princessjinifer@gmail.com or just download\nthe program again.\n";
 		exit(1);
 	}
 	srand(time(NULL));
+
+	string filePath = fileLocations("names");
+
+//	cout << filePath << "\n"; // Developer use only
+
 	string returnedFrom = "name entry";
 	
 	cout << "What is your name? ";
 	getline(cin, name);
-	ofstream put_name("names", ios::app);
+	ofstream put_name(filePath.c_str(), ios::app);
 	if (put_name.is_open()) {
 		put_name << name << endl;
 		put_name.close();
@@ -103,38 +114,44 @@ int main() {
 }
 
 void body(string whereFrom) {
-	string confirm_quit;
-	char *whereTo;
-	char temp[10];
+	string whereTo;
 
 	cout << "you have come from the " << whereFrom << ";\n";
+	
+//	processInput(); // Work in progress.
+	
 	while(true) {
 		cout << "Type your command here, anything not in the help will end the program\n";
 		cout << "Type 'help' if you don't know any of the commands\n";
 		cout << ": ";
-		cin >> temp;
-		whereTo = temp;
-		upperCase(whereTo);
-		if (whereTo == "HELP") {
+		getline(cin, whereTo);
+		if (whereTo == "help" || whereTo == "Help" || whereTo == "HELP") {
 			help();
-		} else if (whereTo == "SETTINGS") {
+		}
+		if (whereTo == "settings" || whereTo == "Settings" || whereTo == "SETTINGS") {
 			settings();
-		} else if (whereTo == "LIST") {
+		}
+		if (whereTo == "list" || whereTo == "List" || whereTo == "LIST") {
 			list();
-		} else if (whereTo =="PLAY") {
+		}
+		if (whereTo == "play" || whereTo == "Play" || whereTo == "PLAY") {
 			play();
-		} else if (whereTo == "CREDITS") {
+		}
+		if (whereTo == "credits" || whereTo == "Credits" || whereTo == "CREDITS") {
 			credits();
-		} else if (whereTo == "HIGHSCORES") {
+		}
+		if (whereTo == "highscores" || whereTo == "Highscores" || whereTo == "HIGHSCORES") {
 			highscores();
-		} else if (whereTo == "CIRCLE") {
+		}
+		if (whereTo == "circle" || whereTo == "Circle" || whereTo == "CIRCLE") {
 			circleCalc();
-		} else if (whereTo == "EXIT" || whereTo == "QUIT") {
+		}
+		if (whereTo == "exit" || whereTo == "Exit" || whereTo == "EXIT" || whereTo == "quit" || whereTo == "Quit" || whereTo == "QUIT") {
 			exit(1);
 		} else {
 			system("clear");
 			
-			cout << "Sorry, but " << temp << " is not one of my known commands, enter help to see a list of\navailable choices.\n\n";
+			cout << "Sorry, but " << whereTo << " is not one of my known commands, enter one of the given choices.\n\n";
 		}
 	}
 }
@@ -160,6 +177,7 @@ void settings() {
 	string new_number, word, newword;
 	string secretw = password_check();
 	string returnedFrom = "settings";
+	string filePath;
 
 	if (secretw == "error") {
 		cout << "Error (Code 1). Problem with password file. Email princessjinifer@gmail.com for a fix\n";
@@ -187,7 +205,8 @@ void settings() {
 			body(returnedFrom);
 		}
 		if (change == 2) {
-			ofstream password("password", ios::trunc);
+			filePath = fileLocations("password");
+			ofstream password(filePath.c_str(), ios::trunc);
 			if (password.is_open()) {
 				cout << "Please enter the new password" << endl;
 				getline(cin, newword);
@@ -198,7 +217,8 @@ void settings() {
 			} else cout << "Sorry, there was an error opening the password file";
 		}
 		if (change == 3) {
-			ofstream number("number", ios::trunc);
+			filePath = fileLocations("number");
+			ofstream number(filePath.c_str(), ios::trunc);
 			if (number.is_open()) {
 				cout << "Please enter the new number" << endl;
 				getline(cin, new_number);
@@ -210,14 +230,16 @@ void settings() {
 			else cout << "Unable to open file";
 		}
 		system("clear");
-		cout << "I'm sorry, but I don't recognize that, please enter a number from above..." << endl;
+		cout << "I'm sorry, but I don't recognize that, please enter a number from above." << endl;
     }
 }
 
 void list () {
+	string names;
 	string returnedFrom = "list of names";
+	string filePath = fileLocations("names");
 	
-	ifstream usersFile("names");
+	ifstream usersFile(filePath.c_str());
 	if (usersFile.is_open()) {
 		while (usersFile.good()) {
 			getline(usersFile,names);
@@ -247,8 +269,9 @@ void credits() {
 void highscores() {
 	string highscore;
 	string returnedFrom = "highscores";
+	string filePath = fileLocations("highscores");
 
-	ifstream showHighscores("highscores");
+	ifstream showHighscores(filePath.c_str());
 	if (showHighscores.is_open()) {
 		while (showHighscores.good()) {
 			getline(showHighscores,highscore);
@@ -263,7 +286,7 @@ void highscores() {
 }
 
 void play() {
-	int rando;
+	int rando, guess;
 	rando = random_chooser();
 	int score=0;
 	int incorrectGuess=0;
@@ -304,13 +327,14 @@ void play() {
 void youWin(int finalScore, int incorrectGuess) {
 	string playagain;
 	string returnedFrom = "game";
+	string filePath = fileLocations("highscores");
 
 	cout << "You guessed correctly!\n";
 	cout << "You guessed " << finalScore << " times before winning o: I know you can do better than that!!\n";
 	if (incorrectGuess > 0) {
 		cout << "You guessed " << incorrectGuess << " words/blank guesses/numbers higher than " << highNumberInt << ", You should be a little more careful :P\n";
 	}
-	ofstream putScore("highscores", ios::app);
+	ofstream putScore(filePath.c_str(), ios::app);
 	if (putScore.is_open()) {
 		putScore << name << "\t\t" << finalScore << "\t\t" << incorrectGuess << endl;
 		putScore.close();
